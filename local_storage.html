@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCAL_STORAGE</title>
+</head>
+<body>
+    <h2>STORING OBJECTS IN LOCAL STORAGE</h2>
+
+    <script>
+        let Obj ={
+            name: 'Samreen Begum',
+            age: 22
+        };
+
+        //Converting Object into String Format
+        let obj1 = JSON.stringify(obj);
+
+        //Adding Object to local Storage
+        localStorage.setItem('obj', obj1);
+
+        //Coverting string into it's Original Format(Object)
+
+        let obj2 = JSON.parse(localStorage.getItem('obj'));
+
+        console.log(obj2);
+
+    </script>
+</body>
+</html>
