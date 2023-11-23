@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking_Form</title>
+</head>
+<body>
+    <form id="userDetails">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel"  id="phone">
+
+        <input type="submit" value="submit">
+
+        <h2>User_Details</h2>
+        <ul id="items" class="list-group">
+            
+        </ul>
+    </form>
+    <!--<script src="script.js"></script>-->
+    <script>
+        var form = document.getElementById('userDetails');
+        var itemList = document.getElementById('items');
+
+
+        //Form Submit Event
+        form.addEventListener('submit', handleSubmit);
+        function handleSubmit(e){
+            e.preventDefault();
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone =document.getElementById('phone').value;
+
+            //Create a List item to display user Details
+            var li = document.createElement('li');
+            li.textContent = `Name: ${name}, Email: ${email}, Phone: ${phone}`;
+            itemList.appendChild(li);
+
+            //Add data to Local storage (you can use an array to store multipule Entires)
+            const userData = {
+                name: name,
+                email: email,
+                phone: phone
+            };
+
+            var StoredData = localStorage.getItem('userData');
+            var userDataArray = StoredData ? JSON.parse(StoredData) : [];
+            userDataArray.push(userData);
+
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            form.reset();
+        }
+    </script>
+</body>
+</html>
