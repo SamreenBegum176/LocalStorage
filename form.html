@@ -9,13 +9,13 @@
     <h2>Book a Call</h2>
     <form onsubmit="StoreInlocalStorage(event)">
         <label>Name:</label>
-        <input type="text" name="userName">
+        <input type="text" name="userName" id="nameInput">
 
         <label>Email:</label>
-        <input type="email" name="email">
+        <input type="email" name="email" id="emailInput">
 
         <label>Phone Number:</label>
-        <input type="tel" name="phoneNumber">
+        <input type="tel" name="phoneNumber" id="phoneInput">
         <button id="btn">Submit</button>
     </form>
     <h3>User_Details</h3>
@@ -48,14 +48,30 @@
             deleteBtn.type = "button";
             deleteBtn.value = 'Delete';
 
+            const editBtn = document.createElement('input');
+            editBtn.type = "button";
+            editBtn.value = 'Edit';
+
             deleteBtn.onclick = () => {
                 localStorage.removeItem(userData.email);
                 parentElement.removeChild(childElement);
                 parentElement.removeChild(deleteBtn);
+
+            }
+
+            editBtn.onclick = () => {
+                localStorage.removeItem(userData.email);
+                parentElement.removeChild(childElement);
+                parentElement.removeChild(deleteBtn);
+                parentElement.removeChild(editBtn);
+                document.getElementById('nameInput').value=userData.name;
+                document.getElementById('emailInput').value=userData.email;
+                document.getElementById('phoneInput').value=userData.phoneNumber;
             }
             
             parentElement.appendChild(childElement);
             parentElement.appendChild(deleteBtn);
+            parentElement.appendChild(editBtn);
         }
     </script>
 </body>
