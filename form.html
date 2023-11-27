@@ -3,51 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+    <title>BOOKCALL_FORM</title>
 </head>
 <body>
-    <h1>User Data Form</h1>
-    <form id="userData">
-        <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" id="firstName"><br><br>
+    <h2>Book a Call</h2>
+    <form onsubmit="StoreInlocalStorage(event)">
+        <label>Name:</label>
+        <input type="text" name="userName">
 
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName"><br><br>
+        <label>Email:</label>
+        <input type="email" name="email">
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email"><br><br>
-
-        <input type="submit" value="Submit">
+        <label>Phone Number:</label>
+        <input type="tel" name="phoneNumber">
+        <button id="btn">Submit</button>
     </form>
+    <h3>User_Details</h3>
+    <ul id="items">
+
+    </ul>
     <script>
-        //Access the form element
-        const form = document.getElementById('userData');
+        function StoreInlocalStorage(event){
+            event.preventDefault();
+            const name=event.target.userName.value;
+            const email=event.target.email.value;
+            const phoneNumber=event.target.phoneNumber.value;
+            //localStorage.setItem('name', name);
+            //localStorage.setItem('email', email);
+            //localStorage.setItem('phoneNumber',phoneNumber);
+            const userData={
+                name,
+                email,
+                phoneNumber
+            }
+            localStorage.setItem(userData.email,JSON.stringify(userData));
+            showUsOnScreen(userData);
+        }
+        function showUsOnScreen(userData){
+            const parentElement = document.getElementById('items');
+            const childElement = document.createElement('li');
+            childElement.textContent = userData.name + ':' + userData.email + ':' + userData.phoneNumber;
 
-        // Event Listener for form submission
-        form.addEventListener('submit', function(e){
-            e.preventDefault(); // Preventing the form from submitting normally
+            const deleteBtn = document.createElement('input');
+            deleteBtn.type = "button";
+            deleteBtn.value = 'Delete';
 
-            //Get values from form
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
-
-            //creating an Object to store Data
-            const userDetails ={
-                firstName: firstName,
-                lastName: lastName,
-                email: email
-            };
-
-            // Store data in local Storage
-            localStorage.setItem('userDetails', JSON.stringify(userDetails));
-
-            //Optionally you can clear the form after Storing the data
-            form.reset();
-
-            //Alert the data stored in the form
-            alert('User data has been stored in local storage');
-        });
+            deleteBtn.onclick = () => {
+                localStorage.removeItem(userData.email);
+                parentElement.removeChild(childElement);
+                parentElement.removeChild(deleteBtn);
+            }
+            
+            parentElement.appendChild(childElement);
+            parentElement.appendChild(deleteBtn);
+        }
     </script>
 </body>
 </html>
